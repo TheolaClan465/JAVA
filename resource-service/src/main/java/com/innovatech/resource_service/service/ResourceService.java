@@ -5,7 +5,7 @@ import com.innovatech.resource_service.model.entity.Resource;
 
 import java.util.List;
 
-public class ResourceService {
+public interface ResourceService {
     
     List<Resource> findAll();
     Resource findById(Long id);
