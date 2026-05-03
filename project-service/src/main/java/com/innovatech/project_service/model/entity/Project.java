@@ -10,8 +10,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "projects")
-@Getter @Setter @ToString
-@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Project {
     
 
@@ -50,4 +52,7 @@ public class Project {
 
     @Column(name = "project_industry")
     private String projectIndustry;
+
+
+
 }
