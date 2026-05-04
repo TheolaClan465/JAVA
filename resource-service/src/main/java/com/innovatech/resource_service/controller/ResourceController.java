@@ -30,6 +30,9 @@ import com.innovatech.resource_service.model.dto.ResourceDTO;
 import com.innovatech.resource_service.model.entity.Resource;
 import com.innovatech.resource_service.repository.ResourceRepository;
 import com.innovatech.resource_service.model.dto.ErrorDTO;
+import com.innovatech.resource_service.client.ProjectClient;
+import feign.FeignException;
+import com.innovatech.resource_service.model.dto.ProjectDTO;
 
 @RestController
 @RequestMapping("/api/resources")
@@ -42,10 +45,28 @@ public class ResourceController {
     @Autowired
     private ResourceRepository resourceRepository;
 
-    @PostMapping
-    public ResponseEntity<Resource> createResource(@Valid @RequestBody Resource resource){
-        Resource savedResource = resourceRepository.save(resource);
+    @Autowired
+    private ProjectClient projectClient;
 
+    @PostMapping
+    public ResponseEntity<?> createResource(@Valid @RequestBody Resource resource){
+        
+        if (resource.getProjectId() != null) {
+            try {
+                // FEIGN HACE EL TRABAJO SUCIO POR NOSOTROS
+                projectClient.getProjectById(resource.getProjectId());
+
+            } catch (FeignException.NotFound e) {
+                // Feign lanza esta excepción si el otro microservicio devuelve un 404
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Error de Validación: El proyecto con ID " + resource.getProjectId() + " no existe.");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Error de comunicación con el Project Service.");
+            }
+        }
+
+        Resource savedResource = resourceRepository.save(resource);
         return new ResponseEntity<>(savedResource, HttpStatus.CREATED);
     }
 
