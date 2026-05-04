@@ -32,7 +32,7 @@ Abra una terminal y ejecute el siguiente comando para descargar el código fuent
 
 ```bash
 git clone https://github.com/TheolaClan465/JAVA.git
-cd Fullstach-II-WEB-Project
+cd java
 ```
 
 ### 2. En la terminal
