@@ -31,7 +31,7 @@ Siga estas instrucciones para clonar, compilar y ejecutar la aplicación en un e
 Abra una terminal y ejecute el siguiente comando para descargar el código fuente:
 
 ```bash
-git clone <URL_DE_TU_REPOSITORIO>
+git clone https://github.com/TheolaClan465/JAVA.git
 cd Fullstach-II-WEB-Project
 ```
 
